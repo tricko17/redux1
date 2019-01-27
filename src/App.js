@@ -1,28 +1,53 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { connect } from 'react-redux';
 import './App.css';
+import Notes from './Notes';
 
 class App extends Component {
+  constructor(){
+    super()
+    this.state = {
+      count: 0,
+    }
+  }
+
+  increament = () => {
+    this.props.dispatch({ type: 'INCREMENT' })
+  }
+
+  increamentdua = () => {
+    this.props.dispatch({ type: 'INCREMENTDUA', plus: 2 })
+  }
+
+  decreament = () => {
+    this.props.dispatch({ type: 'DECREMENT' })
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <div>
+          <Notes />
+          <button onClick={() => this.decreament()}>
+            Kurang
+          </button>
+          <span></span>
+          <button onClick={() => this.increament()}>
+            Tambah
+          </button>
+          <span></span>
+          <button onClick={() => this.increamentdua()}>
+            Tambah + 2
+          </button>
+        </div>
       </div>
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+      count: state.count
+  }
+}
+export default connect(mapStateToProps)(App);
 
-export default App;
